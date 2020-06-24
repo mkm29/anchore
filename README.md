@@ -31,3 +31,5 @@ The basic format is: `anchore-cli image vuln INPUT_IMAGE VULN_TYPE`
 
 4. Output to JSON
 > `anchore-cli --u admin --p foobar --json image vuln quay.agilesof.com/brandi-dev/ad-hoc-service:latest all > 'cve.json'`
+
+[Follow Up](https://opensource.com/article/18/8/tools-container-security)
