@@ -2,7 +2,7 @@
 
 ---
 
-## Installation
+## Local Installation/Usage
 
 1. Install Anchore CLI
 
@@ -17,7 +17,7 @@ This is done via PIP: `pip install --user --upgrade anchorecli`
 3. Bring up Anchore containers
 > `docker-compose up -d`
 
-## Usage
+### Usage
 
 1. For basic scans, you need to first add the image to be analyzed:
 > `anchore-cli --u admin --p foobar image add quay.agilesof.com/brandi-dev/ad-hoc-service:latest`
@@ -31,6 +31,19 @@ The basic format is: `anchore-cli image vuln INPUT_IMAGE VULN_TYPE`
 
 4. Output to JSON
 > `anchore-cli --u admin --p foobar --json image vuln quay.agilesof.com/brandi-dev/ad-hoc-service:latest all > 'cve.json'`
+
+
+## docker-compose
+
+It is much easier to use docker-compose, the yaml files are included in this directory, just run `docker-compose up -d` from this directory.
+
+### Usage
+
+> `docker-compose exec api anchore-cli image add IMAGE`
+> `docker-compose exec api anchore-cli image vuln IMAGE VULNM_TYPE`
+
+**VULN_TYPE**: os, on-os, all
+
 
 > [Follow Up](https://opensource.com/article/18/8/tools-container-security)
 > [Tutorial](https://geekflare.com/anchore-container-security-scanner/)
