@@ -7,16 +7,16 @@
 # for values like the endpoint hostname. This config provides a uniform setting of those such that env vars passed in from
 # execution will overwrite values needed.
 
-service_dir: ${ANCHORE_SERVICE_DIR}
+service_dir: /home/anchore
 tmp_dir: /analysis_scratch
 log_level: ${ANCHORE_LOG_LEVEL}
 cleanup_images: true
 
 # When set, if a registry credential username is set to 'iamauto' for an ecr registry, the engine will
 # use whatever aws creds are available in the standard boto search path (.aws, env, etc)
-allow_awsecr_iam_auto: true
-host_id: "${ANCHORE_HOST_ID}"
-internal_ssl_verify: ${ANCHORE_INTERNAL_SSL_VERIFY}
+# allow_awsecr_iam_auto: true
+# host_id: "${ANCHORE_HOST_ID}"
+# internal_ssl_verify: ${ANCHORE_INTERNAL_SSL_VERIFY}
 
 global_client_connect_timeout: ${ANCHORE_GLOBAL_CLIENT_CONNECT_TIMEOUT}
 global_client_read_timeout: ${ANCHORE_GLOBAL_CLIENT_READ_TIMEOUT}
@@ -26,16 +26,17 @@ auto_restart_services: false
 # Locations for keys used for signing and encryption. Only one of 'secret' or 'public_key_path'/'private_key_path' needs to be set. If all are set then the keys take precedence over the secret value
 # Secret is for a shared secret and if set, all components in anchore should have the exact same value in their configs.
 #
-keys:
-  secret: ${ANCHORE_AUTH_SECRET}
-  public_key_path: ${ANCHORE_AUTH_PUBKEY}
-  private_key_path: ${ANCHORE_AUTH_PRIVKEY}
+# I am not going to be setting encryption keys yet, just testing
+# keys:
+#   secret: ${ANCHORE_AUTH_SECRET}
+#   public_key_path: ${ANCHORE_AUTH_PUBKEY}
+#   private_key_path: ${ANCHORE_AUTH_PRIVKEY}
 
 # Configuring supported user authentication and credential management
 user_authentication:
-  oauth:
-    enabled: ${ANCHORE_OAUTH_ENABLED}
-    default_token_expiration_seconds: ${ANCHORE_OAUTH_TOKEN_EXPIRATION}
+  # oauth:
+  #   enabled: ${ANCHORE_OAUTH_ENABLED}
+  #   default_token_expiration_seconds: ${ANCHORE_OAUTH_TOKEN_EXPIRATION}
 
   # Set this to True to enable storing user passwords only as secure hashes in the db. This can dramatically increase CPU usage if you
   # don't also use oauth and tokens for internal communications (which requires keys/secret to be configured as well)
@@ -50,46 +51,46 @@ metrics:
 # Uncomment if you have a local endpoint that can accept
 # notifications from the anchore-engine, as configured below
 # This section is only required on the catalog service containers
-webhooks:
-  webhook_user: null
-  webhook_pass: null
-  ssl_verify: false
-  general:
-    url: ${ANCHORE_WEBHOOK_DESTINATION_URL}
-  policy_eval: {}
-  event_log: {}
+# webhooks:
+#   webhook_user: null
+#   webhook_pass: null
+#   ssl_verify: false
+#   general:
+#     url: ${ANCHORE_WEBHOOK_DESTINATION_URL}
+#   policy_eval: {}
+#   event_log: {}
 
 # A feeds section is available for override, but shouldn't be
 # needed. By default, the 'admin' credentials are used if present,
 # otherwise anonymous access for feed sync is used
 #
-feeds:
-  # If set to false, instruct anchore-engine to skip (all) feed sync operations
-  sync_enabled: ${ANCHORE_FEEDS_ENABLED}
-  ssl_verify: ${ANCHORE_FEEDS_SSL_VERIFY}
-  selective_sync:
-    # If enabled only sync specific feeds instead of all.
-    enabled: ${ANCHORE_FEEDS_SELECTIVE_ENABLED}
-    feeds:
-      github: true
-      vulnerabilities: true
-      # Warning: enabling the packages and nvd sync causes the service to require much
-      #   more memory to do process the significant data volume. We recommend at least 4GB available for the container
-      packages: false
-      nvdv2: true
-      # Enabling snyk syncs snyk vulnerability data from an on-premise anchore enterprise feeds service. Please contact
-      # anchore support for finding out more about this service
-      snyk: false
-      # Enabling vulndb syncs vulndb vulnerability data from an on-premise anchore enterprise feeds service. Please contact
-      # anchore support for finding out more about this service
-      vulndb: false
-  anonymous_user_username: anon@ancho.re
-  anonymous_user_password: pbiU2RYZ2XrmYQ
-  url: ${ANCHORE_FEEDS_URL}
-  client_url: ${ANCHORE_FEEDS_CLIENT_URL}
-  token_url: ${ANCHORE_FEEDS_TOKEN_URL}
-  connection_timeout_seconds: 3
-  read_timeout_seconds: 60
+# feeds:
+#   # If set to false, instruct anchore-engine to skip (all) feed sync operations
+#   sync_enabled: ${ANCHORE_FEEDS_ENABLED}
+#   ssl_verify: ${ANCHORE_FEEDS_SSL_VERIFY}
+#   selective_sync:
+#     # If enabled only sync specific feeds instead of all.
+#     enabled: ${ANCHORE_FEEDS_SELECTIVE_ENABLED}
+#     feeds:
+#       github: true
+#       vulnerabilities: true
+#       # Warning: enabling the packages and nvd sync causes the service to require much
+#       #   more memory to do process the significant data volume. We recommend at least 4GB available for the container
+#       packages: false
+#       nvdv2: true
+#       # Enabling snyk syncs snyk vulnerability data from an on-premise anchore enterprise feeds service. Please contact
+#       # anchore support for finding out more about this service
+#       snyk: false
+#       # Enabling vulndb syncs vulndb vulnerability data from an on-premise anchore enterprise feeds service. Please contact
+#       # anchore support for finding out more about this service
+#       vulndb: false
+#   anonymous_user_username: anon@ancho.re
+#   anonymous_user_password: pbiU2RYZ2XrmYQ
+#   url: ${ANCHORE_FEEDS_URL}
+#   client_url: ${ANCHORE_FEEDS_CLIENT_URL}
+#   token_url: ${ANCHORE_FEEDS_TOKEN_URL}
+#   connection_timeout_seconds: 3
+#   read_timeout_seconds: 60
 
 
 # As of 0.3.0 this section is used instead of the credentials.users section
