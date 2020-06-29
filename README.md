@@ -39,9 +39,18 @@ It is much easier to use docker-compose, the yaml files are included in this dir
 
 ### Usage
 
-  * `docker-compose up -d`  
-  * `docker-compose exec api anchore-cli --debug --insecure image add IMAGE`  
-  * `docker-compose exec api anchore-cli --json image vuln IMAGE VULNM_TYPE > 'OUT.json'`  
+**Note**: You can sh into the container if you do not want to preface all commands with `docker-compose exec api` if you would like with: `docker-compose exec api /bin/sh`  
+
+1. Start Anchore
+  > `docker-compose up -d`
+2. Add Quay Registry
+  > `anchore-cli registry add --insecure quay.agilesof.com QUAYUSER QUAYPASS`
+3. Add Image to be analyzed
+  > `docker-compose exec api anchore-cli --debug --insecure image add IMAGE`
+4. Get Status
+  > `docker-compose exec api anchore-cli image wait IMAGE`
+5. Get list of vulnerabilities
+  > `docker-compose exec api anchore-cli --json image vuln IMAGE VULNM_TYPE > 'OUT.json'`  
 
 **VULN_TYPE**: os, on-os, all
 
