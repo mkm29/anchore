@@ -41,15 +41,10 @@ It is much easier to use docker-compose, the yaml files are included in this dir
 
   * `docker-compose up -d`  
   * `docker-compose exec api anchore-cli image add IMAGE`  
-  * `docker-compose exec api anchore-cli image vuln IMAGE VULNM_TYPE`  
+  * `docker-compose exec api anchore-cli --json image vuln IMAGE VULNM_TYPE > 'OUT.json'`  
 
 **VULN_TYPE**: os, on-os, all
 
 
 > [Follow Up](https://opensource.com/article/18/8/tools-container-security)
 > [Tutorial](https://geekflare.com/anchore-container-security-scanner/)
-
-docker-compose exec api anchore-cli --json image vuln quay.agilesof.com/brandi/brandi-python-ubi:v0.0.4 all > 'cve.json'
-
-$QUAY_USERNAME
-$QUAY_PASSWORD
