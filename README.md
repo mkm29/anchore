@@ -40,11 +40,15 @@ It is much easier to use docker-compose, the yaml files are included in this dir
 ### Usage
 
   * `docker-compose up -d`  
-  * `docker-compose exec api anchore-cli image add IMAGE`  
+  * `docker-compose exec api anchore-cli --debug --insecure image add IMAGE`  
   * `docker-compose exec api anchore-cli --json image vuln IMAGE VULNM_TYPE > 'OUT.json'`  
 
 **VULN_TYPE**: os, on-os, all
 
+
+# Notes
+
+Because our quay uses a self signed certificate, you must use the `--insecure` flag when using anchore-cli
 
 > [Follow Up](https://opensource.com/article/18/8/tools-container-security)
 > [Tutorial](https://geekflare.com/anchore-container-security-scanner/)
